@@ -6,14 +6,15 @@ export default function signup(){
         <main>
             <div>
                 <p>Signup</p>
-                <form>
+                <div>
                     <h3>Email:</h3>
                     <input type="email" className="outline-2 outline-black outline email"></input>
                     <h3>Password</h3>
                     <input type="password" className="outline-2 outline-black outline pass"></input>
                     <br/>
-                    <button onClick={() => signupFunction(document.getElementsByClassName("email"), document.getElementsByClassName("pass"))} className="outline-2 outline-black outline mt-5">signup</button>
-                </form>
+                </div>
+                <button onClick={() => signupFunction(document.getElementsByClassName("email"), document.getElementsByClassName("pass"))} className="outline-2 outline-black outline mt-5">signup</button>
+
             </div>
         </main>
     )
