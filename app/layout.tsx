@@ -5,7 +5,7 @@ const comfortaa = Comfortaa({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'CoTrackers',
-  description: 'Finance Tracker built with Next.js, React, and Tailwind.',
+  description: 'Finance Tracker built with Next.js, React, and TailwindCSS.',
 }
 
 export default function RootLayout({ children }) {
