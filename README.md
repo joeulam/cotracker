@@ -1,4 +1,4 @@
-# <img src='public/assets/cotrackerswhite.png' width=248 height=100/>
+# <img src='public/assets/cotrackerswhite.png' width=256/>
 
 ### An all-in-one finance tracker with a practical, modern GUI.
 ##### Built with Next.js, React, TypeScript, and TailwindCSS
