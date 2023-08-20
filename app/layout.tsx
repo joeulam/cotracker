@@ -1,3 +1,4 @@
+import 'app/globals.css'
 import { Comfortaa, Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
