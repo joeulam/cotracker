@@ -1,16 +1,18 @@
 'use client'
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase_api/firebaseConfig";
-import { app } from "../../firebase_api/firebaseConfig";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { apps } from "../../firebase_api/firebaseConfig";
 import { redirect } from 'next/navigation'
 import { onAuthStateChanged } from "firebase/auth";
 
-export function signupFunction(email,password){
+export async function signupFunction(email,password){
   console.log("clicked")
+    const auth = getAuth(apps)
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+        console.log("done")
+
         // ...
         onAuthStateChanged(auth, (user) => {
           if (user) {
