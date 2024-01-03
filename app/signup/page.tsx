@@ -1,5 +1,4 @@
-'use client';
-import React from 'react'
+'use client'
 import {signupFunction} from '../signup/signup'
 export default function signup(){
     return(
