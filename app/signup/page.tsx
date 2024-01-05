@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { apps } from "../../firebase_api/firebaseConfig";
 import { useRouter } from 'next/navigation';
 
-export default function signup(){
+export default function Signup(){
     const router = useRouter();
     function signupB(){
         const email = (document.getElementById("email") as HTMLInputElement | null)?.value;

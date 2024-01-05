@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { apps } from '../../firebase_api/firebaseConfig';
 
-export default function login() {
+export default function Login() {
     // Use the useRouter hook to get the router instance
     const router = useRouter();
 
