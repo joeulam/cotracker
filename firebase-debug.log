@@ -24,3 +24,8 @@
 [debug] [2024-01-05T00:54:10.773Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cotracker-a8b31:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
 [debug] [2024-01-05T00:54:10.774Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/cotracker-a8b31 [none]
 [debug] [2024-01-05T00:54:11.074Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/cotracker-a8b31 200
+[debug] [2024-01-05T00:54:11.075Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/cotracker-a8b31 {"projectId":"cotracker-a8b31","projectNumber":"597195420591","displayName":"cotracker","name":"projects/cotracker-a8b31","resources":{"hostingSite":"cotracker-a8b31"},"state":"ACTIVE","etag":"1_85bc73f9-686f-4dfd-8310-1e4d54e0a946"}
+[debug] [2024-01-05T00:54:17.753Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/cotracker-a8b31/sites pageToken=&pageSize=10
+[debug] [2024-01-05T00:54:18.245Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/cotracker-a8b31/sites 200
+[debug] [2024-01-05T00:54:18.245Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/cotracker-a8b31/sites {"sites":[{"name":"projects/cotracker-a8b31/sites/cotracker-a8b31","defaultUrl":"https://cotracker-a8b31.web.app","appId":"1:597195420591:web:a76a9ec408611147c2355a","type":"DEFAULT_SITE"}]}
+[debug] [2024-01-05T00:54:18.245Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:597195420591:web:a76a9ec408611147c2355a/config [none]
