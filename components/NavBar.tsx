@@ -2,9 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaBars } from 'react-icons/fa'; // Mobile navbar menu icon
 import { GrClose } from 'react-icons/gr'; // Mobile navbar menu close icon
-import logo from 'public/assets/cotrackerswhite.png';
-import themeIcon from 'public/icons/toggletheme.svg';
-
+import themeIcon from '../public/icons/toggletheme.svg';
+import logo from "../public/assets/cotrackerswhite.png"
 const NavBar = ({page}) => {
     return (
         <nav className='fixed top-0 left-0 w-full z-[999]'>
@@ -45,12 +44,12 @@ const NavBar = ({page}) => {
                         </li>
                         <li className='p-2'>
                             <div className='flex w-[100px] h-[42px] rounded-[10px] border-[3px] border-zinc-300 items-center justify-center'>
-                                <h2>Log In</h2>
+                                <h2><a href='/login'>Log In</a></h2>
                             </div>
                         </li>
                         <li className='p-2'>
                             <div className='flex w-[100px] h-[42px] rounded-[10px] bg-[#f3f3f3] items-center justify-center'>
-                                <h2 className='text-[#141414]'>Sign Up</h2>
+                                <h2 className='text-[#141414]'><a href='/signup'>Sign Up</a></h2>
                             </div>
                         </li>
                     </div>
