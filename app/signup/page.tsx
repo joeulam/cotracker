@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { doc, setDoc } from "firebase/firestore"; 
 import { db } from "../../firebase_api/firebaseConfig";
 
+// Creates a new page in firebase // 
 async function create_new_user(uid){
     await setDoc(doc(db, "user", uid), {
         balance: 0.00,

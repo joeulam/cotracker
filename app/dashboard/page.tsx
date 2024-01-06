@@ -4,13 +4,17 @@ import Image from 'next/image';
 import WindowIcon from '@mui/icons-material/Window';
 import { format, compareAsc } from "date-fns";
 
+
+// Creates the date data//
 function date(){
     const currentDate = format(new Date(),'PPPp')
     return currentDate
 }
 
+
+// Check if user is logged in if not kick to login screen // 
 function checkUser(){
-    
+
 }
 
 export default function dashboard(){
