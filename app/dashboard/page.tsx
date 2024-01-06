@@ -1,19 +1,27 @@
+'use client'
 import logo from "/public/assets/cotrackerswhite.png"
 import Image from 'next/image';
+import WindowIcon from '@mui/icons-material/Window';
+import { format, compareAsc } from "date-fns";
 
-
-
+function date(){
+    const currentDate = format(new Date(),'PPPp')
+    return currentDate
+}
+  
 
 export default function dashboard(){
     return(
-        <main className="h-[100vh]">
+        <main className="h-[100vh] flex">
             <div className="h-[100vh] bg-[#4D4D4D] w-[15vw]">
-                <div className="h-[10vh] items-center justify-center">
-                    <div>
+                <div className="h-[10vh] w-[15vw]">
+                    <div className="flex items-center justify-center">
                         <Image src={logo} height={38} alt='CoTrackers'/>
                     </div>
+                    
                 </div>
-                <div className="h-[8vh] border-solid border-2 flex items-center left bg-[white]">
+                <div className="h-[8vh] border-solid border-2 flex items-center left bg-[#6E6E6E]">
+                    <WindowIcon sx={{color:"white"}}/>
                     <div className="">Dashboard</div>
                 </div>
                 <div className="h-[8vh] flex items-center ">
@@ -35,13 +43,13 @@ export default function dashboard(){
 
 
             <div>
-                <h1>Dashboard</h1>
-                <p>Date</p>
+                <h1 className="text-[48px]">Dashboard</h1>
+                <p>{date()}</p>
             </div>
 
 
-            <div>
-                <h2>Your balance:</h2>
+            <div className="">
+                <h2 className="text-[30px]">Your balance:</h2>
                 <h1>BALANCE</h1>
                 <h3>CARD INFO</h3>
             </div>
