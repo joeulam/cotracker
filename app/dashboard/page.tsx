@@ -8,11 +8,14 @@ function date(){
     const currentDate = format(new Date(),'PPPp')
     return currentDate
 }
-  
+
+function checkUser(){
+    
+}
 
 export default function dashboard(){
     return(
-        <main className="h-[100vh] flex">
+        <main onLoad={checkUser} className="h-[100vh] flex">
             <div className="h-[100vh] bg-[#4D4D4D] w-[15vw]">
                 <div className="h-[10vh] w-[15vw]">
                     <div className="flex items-center justify-center">

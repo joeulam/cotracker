@@ -2,6 +2,20 @@
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { apps } from "../../firebase_api/firebaseConfig";
 import { useRouter } from 'next/navigation';
+import { doc, setDoc } from "firebase/firestore"; 
+import { db } from "../../firebase_api/firebaseConfig";
+
+async function create_new_user(uid){
+    await setDoc(doc(db, "user", uid), {
+        balance: 0.00,
+        user: uid,
+        transaction: 0,
+        total_spent: 0.00,
+
+      });
+}
+
+
 
 export default function Signup(){
     const router = useRouter();
@@ -12,6 +26,9 @@ export default function Signup(){
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in and changes the URL //  
+            const user = userCredential.user
+            create_new_user(user.uid)
+            console.log("Creating page")
             router.push("/dashboard");
         })
         .catch((error) => {
