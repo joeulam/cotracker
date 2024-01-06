@@ -1,26 +1,34 @@
+import logo from "/public/assets/cotrackerswhite.png"
+import Image from 'next/image';
+
+
+
+
 export default function dashboard(){
     return(
-        <main>
-            <div>
-                <div>
-                    LOGO
+        <main className="h-[100vh]">
+            <div className="h-[100vh] bg-[#4D4D4D] w-[15vw]">
+                <div className="h-[10vh] items-center justify-center">
+                    <div>
+                        <Image src={logo} height={38} alt='CoTrackers'/>
+                    </div>
                 </div>
-                <div>
-                    Dashboard
+                <div className="h-[8vh] border-solid border-2 flex items-center left bg-[white]">
+                    <div className="">Dashboard</div>
                 </div>
-                <div>
+                <div className="h-[8vh] flex items-center ">
                     Finance
                 </div>
-                <div>
+                <div className="h-[8vh] flex items-center ">
                     Calendar
                 </div>
-                <div>
+                <div className="h-[8vh] flex items-center ">
                     Wallet
                 </div>
-                <div>
+                <div className="h-[8vh] flex items-center ">
                     Setting
                 </div>
-                <div>
+                <div className="h-[8vh] flex items-center ">
                     Log Out
                 </div>
             </div>
