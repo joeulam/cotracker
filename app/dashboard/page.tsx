@@ -9,6 +9,11 @@ import { doc, getDoc} from "firebase/firestore";
 import { db } from "../../firebase_api/firebaseConfig";
 import { useEffect } from "react";
 import { useState } from "react";
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 class Pdata {
     private id: any;
@@ -111,25 +116,30 @@ export default function dashboard(){
                     </div>
                     <div className="h-[8vh] border-solid border-2 flex items-center left bg-[#6E6E6E]">
                         <WindowIcon sx={{color:"white"}}/>
-                        <div className="">Dashboard</div>
+                        <div className="text-white">Dashboard</div>
                     </div>
                     <div className="h-[8vh] flex items-center ">
-                        Finance
+                        <TrendingUpIcon sx={{color:"white"}}/>
+                        <div className="text-white">Finance</div>
                     </div>
                     <div className="h-[8vh] flex items-center ">
-                        Calendar
+                        <CalendarTodayIcon sx={{color:"white"}}/>
+                        <div className="text-white">Calendar</div>
                     </div>
                     <div className="h-[8vh] flex items-center ">
-                        Wallet
+                        <AccountBalanceWalletIcon sx={{color:"white"}}/>
+                        <div className="text-white">Wallet</div>
                     </div>
                     <div className="h-[8vh] flex items-center ">
-                        Setting
+                        <SettingsIcon sx={{color:"white"}}/>
+                        <div className="text-white">Setting</div>
+                    </div>
+                    <div className="text-white h-[8vh] flex items-center ">
+                        <div className="text-wrap">Logged in as {uid !== null ? uid : 'Loading...'}</div>
                     </div>
                     <div className="h-[8vh] flex items-center ">
-                        Logged in as {uid !== null ? uid : 'Loading...'}
-                    </div>
-                    <div className="h-[8vh] flex items-center ">
-                        Log Out
+                        <LogoutIcon sx={{color:"white"}}/>
+                        <div className="text-white">Log Out</div>
                     </div>
                 </div>
 
@@ -139,7 +149,7 @@ export default function dashboard(){
                         <p>{date()}</p>
                     </div>
 
-                    <div>
+                    <div className="bg-white p-20 rounded-[15px]">
                         <h2 className="text-[30px]">Your balance:</h2>
                         <h1>${balance !== null ? balance : 'Loading...'}</h1>                
                         <h3>CARD INFO</h3>

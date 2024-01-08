@@ -1,12 +1,13 @@
 'use client'
 // Import the necessary hooks and functions
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   getAuth,
   signInWithEmailAndPassword,
   setPersistence,
   browserLocalPersistence,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { apps } from '../../firebase_api/firebaseConfig';
 
@@ -15,10 +16,25 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function loginS() {
+  useEffect(() => {
+    // Use onAuthStateChanged as a subscription inside useEffect
+    const unsubscribe = onAuthStateChanged(getAuth(apps), (user) => {
+      if (user) {
+        // User is signed in
+        router.push('/dashboard');
+      }
+    });
+
+    // Cleanup function to unsubscribe when the component is unmounted
+    return () => unsubscribe();
+  }, [router]);
+
+  // Define the login function outside of onAuthStateChanged
+  const loginS = async () => {
     const email = (document.getElementById('email') as HTMLInputElement | null)?.value;
     const password = (document.getElementById('password') as HTMLInputElement | null)?.value;
     const auth = getAuth(apps);
+
     try {
       setLoading(true);
       await setPersistence(auth, browserLocalPersistence);
@@ -30,7 +46,7 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <main>
