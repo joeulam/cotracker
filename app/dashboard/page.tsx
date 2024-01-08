@@ -15,74 +15,78 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-class Pdata {
-    private id: any;
-    private balance: any;
-    private totalS: any;
-    private transaction: any;
-  
-    constructor(data) {
-      this.totalS = data.total_spent;
-      this.balance = data.balance;
-      this.id = data.user;
-      this.transaction = data.transaction;
+export default function Dashboard(){
+    const router = useRouter()
 
+    class Pdata {
+        private id: any;
+        private balance: any;
+        private totalS: any;
+        private transaction: any;
+    
+        constructor(data) {
+        this.totalS = data.total_spent;
+        this.balance = data.balance;
+        this.id = data.user;
+        this.transaction = data.transaction;
+
+        }
+        getBalance(){
+            return this.balance
+        }
+        getTotalS(){
+            return this.totalS
+        }
+        getTransaction(){
+            return this.transaction
+        }
+        getUid(){
+            return this.id
+        }
     }
-    getBalance(){
-        return this.balance
-    }
-    getTotalS(){
-        return this.totalS
-    }
-    getTransaction(){
-        return this.transaction
-    }
-    getUid(){
-        return this.id
-    }
-  }
 
 // Creates the date data//
-function date(){
-    const currentDate = format(new Date(),'PPPp')
-    return currentDate
-}
-
-function userCheck(){
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if(!user){
-        kick()
+    function date(){
+        const currentDate = format(new Date(),'PPPp')
+        return currentDate
     }
-}
-function kick(){
-    const router = useRouter()
-    router.push("/login");
-}
+
+
 // Check if user is logged in if not kick to login screen // 
 
-async function dataGrab() {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const uid = user.uid;
-    const docRef = doc(db, "user", uid);
-    const docSnap = await getDoc(docRef);
-    if (user){
-        if (docSnap.exists()) {
-            return docSnap.data();
-          } else {
-            console.log("No such document!");
-            return null;
-          }
+    async function dataGrab() {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user){
+            const uid = user.uid;
+            const docRef = doc(db, "user", uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                return docSnap.data();
+            } else {
+                console.log("No such document!");
+                return null;
+            }
+        }
+        else{
+            Kick()
+        }
+        
     }
-    else{
-        kick()
+
+
+    function Kick(){
+        router.push("/login");
     }
     
-  }
-
-
-export default function dashboard(){
+    function userCheck(){
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if(!user){
+            Kick()
+        }
+        return ''
+    }
     const [balance, setBalance] = useState<number | null>(null);
     const [uid, setUid ] = useState<string | null>(null);
     const [total, setTotal ] = useState<number | null>(null);
@@ -99,12 +103,13 @@ export default function dashboard(){
         setTranscation(myInstance.getTransaction());
 
     }
-
     fetchData();
+    userCheck()
+
   }, []); // Empty dependency array ensures useEffect runs only once on mount
 
     return(
-        <main onLoad={userCheck()} className="h-[100vh] flex">
+        <main className="h-[100vh] flex">
 
             <div className="flex">
                 <div className="h-[100vh] bg-[#4D4D4D] w-[15vw]">
