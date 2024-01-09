@@ -14,6 +14,11 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import MedicationIcon from '@mui/icons-material/Medication';
+
+
 
 export default function Dashboard(){
     const router = useRouter()
@@ -114,76 +119,108 @@ export default function Dashboard(){
             <div className="flex">
                 <div className="h-[100vh] bg-[#4D4D4D] w-[15vw]">
                     <div className="h-[10vh] w-[15vw]">
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center mt-[10%]">
                             <Image src={logo} height={38} alt='CoTrackers'/>
                         </div>
                         
                     </div>
-                    <div className="h-[8vh] border-solid border-2 flex items-center left bg-[#6E6E6E]">
-                        <WindowIcon sx={{color:"white"}}/>
-                        <div className="text-white">Dashboard</div>
+                    <div className="ml-[1vw]">
+                        <div className="ml-[-1vw] bg-[#6E6E6E] border-2">
+                            <div className="ml-[1vw] h-[8vh] flex items-center left ">
+                                <WindowIcon className="mr-[1vw]" sx={{color:"white"}}/>
+                                <div className="text-white">Dashboard</div>
+                            </div>
+                        </div>
+                        
+                        <div className="h-[8vh] flex items-center ">
+                            <TrendingUpIcon className="mr-[1vw]" sx={{color:"white"}}/>
+                            <div className="text-white">Finance</div>
+                        </div>
+                        <div className="h-[8vh] flex items-center ">
+                            <CalendarTodayIcon className="mr-[1vw]" sx={{color:"white"}}/>
+                            <div className="text-white">Calendar</div>
+                        </div>
+                        <div className="h-[8vh] flex items-center ">
+                            <AccountBalanceWalletIcon className="mr-[1vw]" sx={{color:"white"}}/>
+                            <div className="text-white">Wallet</div>
+                        </div>
+                        <div className="h-[8vh] flex items-center ">
+                            <SettingsIcon className="mr-[1vw]" sx={{color:"white"}}/>
+                            <div className="text-white">Setting</div>
+                        </div>
+                        <div className="text-white h-[8vh] flex items-center ">
+                            <div className="text-wrap">Logged in as {uid !== null ? uid : 'Loading...'}</div>
+                        </div>
+                        <div className="h-[8vh] flex items-center ">
+                            <LogoutIcon className="mr-[1vw]" sx={{color:"white"}}/>
+                            <div className="text-white">Log Out</div>
+                        </div>
                     </div>
-                    <div className="h-[8vh] flex items-center ">
-                        <TrendingUpIcon sx={{color:"white"}}/>
-                        <div className="text-white">Finance</div>
-                    </div>
-                    <div className="h-[8vh] flex items-center ">
-                        <CalendarTodayIcon sx={{color:"white"}}/>
-                        <div className="text-white">Calendar</div>
-                    </div>
-                    <div className="h-[8vh] flex items-center ">
-                        <AccountBalanceWalletIcon sx={{color:"white"}}/>
-                        <div className="text-white">Wallet</div>
-                    </div>
-                    <div className="h-[8vh] flex items-center ">
-                        <SettingsIcon sx={{color:"white"}}/>
-                        <div className="text-white">Setting</div>
-                    </div>
-                    <div className="text-white h-[8vh] flex items-center ">
-                        <div className="text-wrap">Logged in as {uid !== null ? uid : 'Loading...'}</div>
-                    </div>
-                    <div className="h-[8vh] flex items-center ">
-                        <LogoutIcon sx={{color:"white"}}/>
-                        <div className="text-white">Log Out</div>
-                    </div>
+                    
                 </div>
 
-                <div>
+                <div className="ml-[3vw]">
                     <div>
                         <h1 className="text-[48px]">Dashboard</h1>
                         <p>{date()}</p>
                     </div>
 
-                    <div className="bg-white p-20 rounded-[15px]">
+                    <div className="bg-white pr-[20vw] pl-[2vw] pt-[2vh] pb-[2vh] rounded-[15px] mt-[4vh]">
                         <h2 className="text-[30px]">Your balance:</h2>
-                        <h1>${balance !== null ? balance : 'Loading...'}</h1>                
-                        <h3>CARD INFO</h3>
+                        <h1 className="text-[30px]">${balance !== null ? balance : 'Loading...'}</h1>                
                     </div>
+
+                    <div className="flex mt-[7vh]">
+                        <div className="bg-white rounded-[15px] p-8 mr-[1vw]">
+                            <select name="date" id="dates" className="items-center">
+                                <option value="week">Last week</option>
+                                <option value="month">Last Month</option>
+                                <option value="month6">Last six month</option>
+                                <option value="year">Last year</option>
+                            </select>
+                        </div>
+                        <div className="bg-white rounded-[15px] p-8 mr-[1vw]">
+                            <h3>Transaction</h3>
+                            <p>{trans !== null ? trans : 'Loading...'}</p>
+                        </div>
+                        <div className="bg-white rounded-[15px] p-8">
+                            <h3>Total Spent</h3>
+                            <p>{total !== null ? total : 'Loading...'}</p>
+                        </div>
+                    </div>
+
+                    <div className="flex mt-[5vh]">
+                        <div className="bg-white mr-[2vw]">
+                            <ShoppingBagIcon/>
+                            Shopping
+                        </div>
+                        <div className="bg-white mr-[2vw]">
+                            <FastfoodIcon/>
+                            Cafe and Restaurant
+                        </div>
+                        <div className="bg-white">
+                            <MedicationIcon/>
+                            Healthcare
+                        </div>
+                    </div>
+
+
+
+
                 </div>
+
                 
+                 
             </div>
 
                 
             
 
-            <div>
-                <div>
-                    <select name="date" id="dates">
-                        <option value="week">Last week</option>
-                        <option value="month">Last Month</option>
-                        <option value="month6">Last six month</option>
-                        <option value="year">Last year</option>
-                    </select>
-                </div>
-                <div>
-                    <h3>Transaction</h3>
-                    <p>{trans !== null ? trans : 'Loading...'}</p>
-                </div>
-                <div>
-                    <h3>Total Spent</h3>
-                    <p>{total !== null ? total : 'Loading...'}</p>
-                </div>
-            </div>
+            
+
+
+
+            
         </main>
     )
 }
