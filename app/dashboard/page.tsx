@@ -1,5 +1,5 @@
 'use client'
-import logo from "/public/assets/cotrackerswhite.png"
+import logo from "/Users/joeulam/Desktop/cotracker/public/assets/cotrackerswhite.png"
 import Image from 'next/image';
 import WindowIcon from '@mui/icons-material/Window';
 import { format, compareAsc } from "date-fns";
@@ -17,8 +17,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import MedicationIcon from '@mui/icons-material/Medication';
-
-
+import AddIcon from '@mui/icons-material/Add';
+import NewTransaction from "../../components/NewTransaction";
 
 export default function Dashboard(){
     const router = useRouter()
@@ -210,7 +210,13 @@ export default function Dashboard(){
                 </div>
 
                 
-                 
+                 <div>
+                    <button><AddIcon/></button>
+                 </div>
+
+                 <div>
+                    <NewTransaction/>
+                 </div>
             </div>
 
                 
