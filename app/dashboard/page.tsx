@@ -204,6 +204,7 @@ export default function Dashboard(){
                         </div>
                     </div>
 
+                    <NewTransaction/>
 
 
 
@@ -214,9 +215,8 @@ export default function Dashboard(){
                     <button><AddIcon/></button>
                  </div>
 
-                 <div>
-                    <NewTransaction/>
-                 </div>
+                 
+                 
             </div>
 
                 

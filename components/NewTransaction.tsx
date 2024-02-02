@@ -85,7 +85,7 @@ const NewTransaction = () => {
   };
 // ------------------------------------------------------------------------- //
     return (
-        <div className="relative mr-50 bg-white w-[50vw] h-[50vh] justify-center	">
+        <div className="relative mr-[50vw] bg-white w-[50vw] h-[60vh] justify-center	">
             <h1>New Transaction</h1>
 
             <div>
