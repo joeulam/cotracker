@@ -29,7 +29,6 @@ export default function ActionAreaCard() {
 const [open, setOpen] = React.useState(false);
 
 const handleClick = () => {
-  document.getElementById('cards').style.display = 'none'
   setOpen(true);
 };
 
@@ -54,9 +53,6 @@ const action = (
 );
 // ------------------------------------ // 
 
-const Cancel = () => {
-  document.getElementById('card').style.display = 'none'
-};
 
 // List the choices for a multi line tag // 
 
@@ -92,7 +88,7 @@ const handleChange = (event: SelectChangeEvent<typeof personName>) => {
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea id='cards'>
+      <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             New Transaction
@@ -160,11 +156,9 @@ const handleChange = (event: SelectChangeEvent<typeof personName>) => {
 
             
             <Button onClick={handleClick}>Submit</Button>
-            <Button onClick={Cancel}>Cancel</Button>
-        </CardContent>
-      </CardActionArea>
+        
 
-      <Snackbar
+            <Snackbar
             open={open}
             autoHideDuration={6000}
             onClose={handleClose}
@@ -172,7 +166,8 @@ const handleChange = (event: SelectChangeEvent<typeof personName>) => {
             action={action}
 
             />
+        </CardContent>
+      </CardActionArea>
     </Card>
-    
   );
 }

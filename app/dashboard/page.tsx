@@ -1,5 +1,5 @@
 'use client'
-import logo from "/Users/joeulam/Desktop/cotracker/public/assets/cotrackerswhite.png"
+import logo from "/public/assets/cotrackerswhite.png"
 import Image from 'next/image';
 import WindowIcon from '@mui/icons-material/Window';
 import { format, compareAsc } from "date-fns";
@@ -19,6 +19,10 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import MedicationIcon from '@mui/icons-material/Medication';
 import AddIcon from '@mui/icons-material/Add';
 import NewTransaction from "../../components/NewTransaction";
+import * as React from 'react';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 export default function Dashboard(){
     const router = useRouter()
@@ -112,11 +116,22 @@ export default function Dashboard(){
     userCheck()
 
   }, []); // Empty dependency array ensures useEffect runs only once on mount
+ 
+  const show = () => {
+    document.getElementById('card').style.display = 'flex'
+    document.getElementById('cards').style.display = 'block'
+
+  };
+  
+
 
     return(
-        <main className="h-[100vh] flex">
-
+        <main className="h-[100vh]">
+                    
             <div className="flex">
+                <div id='card' className="hidden">
+                        <NewTransaction />
+                    </div>
                 <div className="h-[100vh] bg-[#4D4D4D] w-[15vw]">
                     <div className="h-[10vh] w-[15vw]">
                         <div className="flex items-center justify-center mt-[10%]">
@@ -203,16 +218,16 @@ export default function Dashboard(){
                             Healthcare
                         </div>
                     </div>
+                    
 
-                    <NewTransaction/>
 
 
 
                 </div>
 
                 
-                 <div>
-                    <button><AddIcon/></button>
+                 <div className="absolute bottom-10 right-10 rounded-[100%] pd-[26px] bg-slate-400 transform scale-300 hover:scale-150 transition-transform">
+                    <button onClick={show}><AddIcon style={{ fontSize: 36 }}/></button>
                  </div>
 
                  
