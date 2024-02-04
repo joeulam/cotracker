@@ -98,12 +98,13 @@ const handleChange = (event: SelectChangeEvent<typeof personName>) => {
             New Transaction
           </Typography>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateField label="Date" />
+                    <DateField required label="Date" />
                 </LocalizationProvider>
                 <div>
               <FormControl  sx={{ m: 1 }} variant="filled">
                   <InputLabel htmlFor="filled-adornment-amount">Amount</InputLabel>
                   <FilledInput
+                      required
                       id="filled-adornment-amount"
                       startAdornment={<InputAdornment position="start">$</InputAdornment>}
                   />
