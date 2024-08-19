@@ -18,24 +18,22 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import MedicationIcon from '@mui/icons-material/Medication';
 import AddIcon from '@mui/icons-material/Add';
-import NewTransaction from "../../components/NewTransaction";
 import * as React from 'react';
 import { Pdata } from "../../components/Pdata";
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Button, MantineProvider } from '@mantine/core';
+import { Modal, Button, MantineProvider, NumberInput, Stack, Input, PillsInput, Pill } from '@mantine/core';
+import { DateInput } from '@mantine/dates';
+import TagGrouping from "../../components/TagGrouping";
 import '@mantine/core/styles.css';
-
+import '@mantine/dates/styles.css';
 
 export default function Dashboard() {
 	const router = useRouter()
-
 	// Creates the date data//
 	function date() {
 		const currentDate = format(new Date(), 'PPPp')
 		return currentDate
 	}
-
-
 	// Check if user is logged in if not kick to login screen // 
 	async function dataGrab() {
 		const auth = getAuth();
@@ -54,7 +52,6 @@ export default function Dashboard() {
 		else {
 			Kick()
 		}
-
 	}
 
 	function Kick() {
@@ -69,10 +66,17 @@ export default function Dashboard() {
 		}
 	}
 
+	async function submitNewTransaction(){
+
+	}
+	
 	const [balance, setBalance] = useState<number | null>(null);
 	const [uid, setUid] = useState<string | null>(null);
 	const [total, setTotal] = useState<number | null>(null);
 	const [trans, setTranscation] = useState<number | null>(null);
+	const tags = [];
+  const [value, setValue] = useState<Date | null>(null);
+	const [opened, { open, close }] = useDisclosure(false);
 
 	// Fetch balance when the component mounts
 	useEffect(() => {
@@ -83,23 +87,14 @@ export default function Dashboard() {
 			setUid(myInstance.getUid());
 			setTotal(myInstance.getTotalS());
 			setTranscation(myInstance.getTransaction());
-
 		}
 		fetchData();
 		userCheck()
-
 	}, []); // Empty dependency array ensures useEffect runs only once on mount
-
-
-	const [opened, { open, close }] = useDisclosure(false);
-
 
 	return (
 		<MantineProvider defaultColorScheme='light'>
 			<div className="flex">
-				<div id='card' className="hidden">
-					<NewTransaction />
-				</div>
 				<div className="h-[100vh] bg-[#4D4D4D] w-[15vw]">
 					<div className="h-[10vh] w-[15vw]">
 						<div className="flex items-center justify-center mt-[10%]">
@@ -186,20 +181,38 @@ export default function Dashboard() {
 							Healthcare
 						</div>
 					</div>
-
-
-
-
-
 				</div>
 
 				<Modal opened={opened} onClose={close} title="Transaction">
-					New Transaction
+					<Stack 
+						align="stretch"
+						justify="center"
+						gap="xs"
+					>
+					<Input.Wrapper label="Transaction Name">
+						<Input/>
+					</Input.Wrapper>
+
+					<NumberInput
+						label="Cost"
+						placeholder="Dollars"
+						prefix="$"
+						defaultValue={0}
+					/>
+
+					<TagGrouping/>
+
+					<DateInput
+						value={value}
+						onChange={setValue}
+						label="Date"
+						placeholder="Date"
+					/>
 					<Button>Add Transaction</Button>
-        </Modal>
+					</Stack>
+				</Modal>
 
 
-				<Button onClick={open}>Add Transaction</Button>
 
 				<div className="absolute bottom-10 right-10 rounded-[100%] pd-[26px] bg-slate-400 transform scale-300 hover:scale-150 transition-transform">
 					<button onClick={open}><AddIcon style={{ fontSize: 36 }} /></button>
