@@ -5,7 +5,7 @@ import WindowIcon from '@mui/icons-material/Window';
 import { format, compareAsc } from "date-fns";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from 'next/navigation';
-import { doc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase_api/firebaseConfig";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -20,8 +20,8 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import AddIcon from '@mui/icons-material/Add';
 import * as React from 'react';
 import { Pdata } from "../../components/Pdata";
-import { useDisclosure } from '@mantine/hooks';
-import { Modal, Button, MantineProvider, NumberInput, Stack, Input, PillsInput, Pill } from '@mantine/core';
+import { useDisclosure, useInputState } from '@mantine/hooks';
+import { Modal, Button, MantineProvider, NumberInput, LoadingOverlay, Stack, Input, Loader, PillsInput, Pill } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import TagGrouping from "../../components/TagGrouping";
 import '@mantine/core/styles.css';
@@ -66,17 +66,36 @@ export default function Dashboard() {
 		}
 	}
 
-	async function submitNewTransaction(){
-
+	async function submitNewTransaction() {
+		setVisible.open();
+		try {
+			await setDoc(doc(collection(doc(db, "user", uid), "newTransactions"), dates.toString()), {
+				date: dates,
+				transactionName: transactionName,
+				tags: [], // Pass your tags array here
+				cost: cost,
+			});
+			// Handle success
+			console.log("Document successfully written!");
+			setOpened.toggle()
+			setVisible.close();
+		} catch (error) {
+			// Handle the error
+			console.error("Error writing document: ", error);
+		}
 	}
 	
 	const [balance, setBalance] = useState<number | null>(null);
 	const [uid, setUid] = useState<string | null>(null);
 	const [total, setTotal] = useState<number | null>(null);
 	const [trans, setTranscation] = useState<number | null>(null);
-	const tags = [];
-  const [value, setValue] = useState<Date | null>(null);
-	const [opened, { open, close }] = useDisclosure(false);
+
+  const [dates, setDate] = useState<Date | null>(null);
+	const [transactionName, setTransactionName] = useInputState('');
+  const [cost, setCost] = useInputState<string | number>(0);
+
+  const [visible, setVisible] = useDisclosure(false); // Loading overlay
+	const [opened, setOpened] = useDisclosure(false); // Add new transaction card
 
 	// Fetch balance when the component mounts
 	useEffect(() => {
@@ -183,14 +202,18 @@ export default function Dashboard() {
 					</div>
 				</div>
 
-				<Modal opened={opened} onClose={close} title="Transaction">
+				<Modal opened={opened} onClose={setOpened.close} title="Transaction">
+        <LoadingOverlay visible={visible} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
+
 					<Stack 
 						align="stretch"
 						justify="center"
 						gap="xs"
 					>
 					<Input.Wrapper label="Transaction Name">
-						<Input/>
+						<Input
+						value={transactionName}
+						onChange={setTransactionName}/>
 					</Input.Wrapper>
 
 					<NumberInput
@@ -198,24 +221,26 @@ export default function Dashboard() {
 						placeholder="Dollars"
 						prefix="$"
 						defaultValue={0}
+						value={cost}
+						onChange={setCost}
 					/>
 
 					<TagGrouping/>
 
 					<DateInput
-						value={value}
-						onChange={setValue}
+						value={dates}
+						onChange={setDate}
 						label="Date"
 						placeholder="Date"
 					/>
-					<Button>Add Transaction</Button>
+					<Button onClick={submitNewTransaction}>Add Transaction</Button>
 					</Stack>
 				</Modal>
 
 
 
 				<div className="absolute bottom-10 right-10 rounded-[100%] pd-[26px] bg-slate-400 transform scale-300 hover:scale-150 transition-transform">
-					<button onClick={open}><AddIcon style={{ fontSize: 36 }} /></button>
+					<button onClick={setOpened.open}><AddIcon style={{ fontSize: 36 }} /></button>
 				</div>
 
 

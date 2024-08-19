@@ -1,16 +1,47 @@
 import { useState } from 'react';
 import { PillsInput, Pill, Combobox, CheckIcon, Group, useCombobox } from '@mantine/core';
+import { getAuth } from 'firebase/auth';
+import { useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase_api/firebaseConfig";
+import { Pdata } from "../components/Pdata";
 
-const tags = ['medical']; // TODO PLEASE MAKE IT IMPORT TAG FROM FIREBASE
 
-export default function TagGrouping() {
+export default function TagGrouping() {  // TODO Move this function to a firebase folder
+  const [value, setValue] = useState<string[]>([]);
+
+  async function dataGrab() {
+		const auth = getAuth();
+		const user = auth.currentUser;
+		if (user) {
+			const uid = user.uid;
+			const docRef = doc(db, "user", uid);
+			const docSnap = await getDoc(docRef);
+			if (docSnap.exists()) {
+				return docSnap.data();
+			} else {
+				console.log("No such document!");
+				return null;
+			}
+		}
+  }
+  
+  const [tags, setTags] = useState<string[] | null>([]);
+  useEffect(() => {
+    async function fetchData() {
+			const data = await dataGrab();
+			const myInstance = new Pdata(data);
+      setTags(myInstance.getTags());
+		}
+		fetchData();
+  }, []); // Empty dependency array ensures useEffect runs only once on mount
+
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
   });
 
   const [search, setSearch] = useState('');
-  const [value, setValue] = useState<string[]>([]);
 
   const handleValueSelect = (val: string) =>
     setValue((current) =>
