@@ -35,6 +35,7 @@ import {
   useCombobox,
   PillsInput,
   Pill,
+	TextInput,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import "@mantine/core/styles.css";
@@ -298,7 +299,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <Modal opened={opened} onClose={setOpened.close} title="Transaction">
+        <Modal opened={opened} onClose={setOpened.close} title="New Transaction">
           <LoadingOverlay
             visible={visible}
             zIndex={1000}
@@ -318,12 +319,11 @@ export default function Dashboard() {
 							required={true}
               onChange={setCost}
             />
-
             <Combobox
-              label="Tags"
               store={combobox}
               onOptionSubmit={handleValueSelect}
             >
+						<Combobox.Header>Tags</Combobox.Header>
               <Combobox.DropdownTarget>
                 <PillsInput onClick={() => combobox.openDropdown()}>
                   <Pill.Group>
