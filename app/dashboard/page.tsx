@@ -5,7 +5,7 @@ import WindowIcon from "@mui/icons-material/Window";
 import { format, compareAsc } from "date-fns";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, updateDoc, increment } from "firebase/firestore";
 import { db } from "../../firebase_api/firebaseConfig";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -39,6 +39,9 @@ import {
 import { DateInput } from "@mantine/dates";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
+import { notifications } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -81,53 +84,84 @@ export default function Dashboard() {
   async function submitNewTransaction() {
     setVisible.open();
     try {
-      await setDoc(
-        doc(
-          collection(doc(db, "user", uid), "newTransactions"),
-          dates.toString()
-        ),
-        {
-          date: dates,
-          transactionName: transactionName,
-          tags: value, // Pass your tags array here
-          cost: cost,
-        }
-      );
-      // Handle success
-      console.log("Document successfully written!");
-      setOpened.toggle();
-      setVisible.close();
-    } catch (error) {
-      // Handle the error
-      console.error("Error writing document: ", error);
-    }
+			if(transactionName != "" && cost != ""){
+				await setDoc(
+					doc(
+						collection(doc(db, "user", uid), "newTransactions"),
+						dates.toString()
+					),
+					{
+						date: dates,
+						transactionName: transactionName,
+						tags: value, // Pass your tags array here
+						cost: cost,
+					}
+				);
+				await updateDoc(doc(db, "user", uid),{
+					total_spent: increment(Number(cost)),
+					transaction: increment(1),
+				})
+				console.log("Document successfully written!");
+				setOpened.toggle();
+				setVisible.close();
+				notifications.show({
+					title: 'Transaction recorded',
+					message: null,
+					color: 'green'
+				})    
+				dates = null;
+				transactionName = null;
+				cost = null;
+				value = null;
+				// TODO CLEAR variables after submitting
+				fetchData()
+			}
+			else{
+				setVisible.close();
+				notifications.show({
+					title: 'Name and cost cannot be blank',
+					message: null,
+					color: 'red'
+				}) 
+			}
+		}
+		catch (error) {
+			console.error("Error writing document: ", error);
+			setOpened.toggle();
+			setVisible.close();
+			notifications.show({
+				title: 'Something went wrong',
+				message: error.toString(),
+				color: 'red'
+			})    
+		}
   }
 
   const [balance, setBalance] = useState<number | null>(null);
   const [uid, setUid] = useState<string | null>(null);
-  const [total, setTotal] = useState<number | null>(null);
-  const [trans, setTranscation] = useState<number | null>(null);
+  var [total, setTotal] = useState<number | null>(null);
+  var [trans, setTranscation] = useState<number | null>(null);
 
-  const [dates, setDate] = useState<Date | null>(null);
-  const [transactionName, setTransactionName] = useInputState("");
-  const [cost, setCost] = useInputState<string | number>(0);
+  var [dates, setDate] = useState<Date | null>(null);
+  var [transactionName, setTransactionName] = useInputState("");
+  var [cost, setCost] = useInputState<string | number>(0);
+  var [value, setValue] = useState<string[]>([]); // For selected tags
 
   const [visible, setVisible] = useDisclosure(false); // Loading overlay
   const [opened, setOpened] = useDisclosure(false); // Add new transaction card
-  const [value, setValue] = useState<string[]>([]); // For selected tags
   const [tags, setTags] = useState<string[] | null>([]); // All tags
 
+	async function fetchData() {
+		const data = await dataGrab();
+		const myInstance = new Pdata(data);
+		setBalance(myInstance.getBalance());
+		setUid(myInstance.getUid());
+		setTotal(myInstance.getTotalS());
+		setTranscation(myInstance.getTransaction());
+		setTags(myInstance.getTags());
+	}
   // Fetch balance when the component mounts
   useEffect(() => {
-    async function fetchData() {
-      const data = await dataGrab();
-      const myInstance = new Pdata(data);
-      setBalance(myInstance.getBalance());
-      setUid(myInstance.getUid());
-      setTotal(myInstance.getTotalS());
-      setTranscation(myInstance.getTransaction());
-      setTags(myInstance.getTags());
-    }
     fetchData();
     userCheck();
   }, []); // Empty dependency array ensures useEffect runs only once on mount
@@ -272,16 +306,16 @@ export default function Dashboard() {
           />
 
           <Stack align="stretch" justify="center" gap="xs">
-            <Input.Wrapper label="Transaction Name">
-              <Input value={transactionName} onChange={setTransactionName} />
+            <Input.Wrapper required={true} label="Transaction Name">
+              <Input required={true} value={transactionName} onChange={setTransactionName} />
             </Input.Wrapper>
 
             <NumberInput
               label="Cost"
               placeholder="Dollars"
               prefix="$"
-              defaultValue={0}
               value={cost}
+							required={true}
               onChange={setCost}
             />
 
@@ -335,17 +369,21 @@ export default function Dashboard() {
               onChange={setDate}
               label="Date"
               placeholder="Date"
+							required={true}
             />
             <Button onClick={submitNewTransaction}>Add Transaction</Button>
           </Stack>
         </Modal>
-
-        <div className="absolute bottom-10 right-10 rounded-[100%] pd-[26px] bg-slate-400 transform scale-300 hover:scale-150 transition-transform">
+				<div className="absolute bottom-10 right-10 rounded-[100%] pd-[26px] bg-slate-400 transform scale-300 hover:scale-150 transition-transform">
           <button onClick={setOpened.open}>
             <AddIcon style={{ fontSize: 36 }} />
           </button>
         </div>
+				
       </div>
+
+			<Notifications />
+
     </MantineProvider>
   );
 }
