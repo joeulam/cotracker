@@ -1,14 +1,13 @@
 "use client";
-import logo from "/public/assets/cotrackerswhite.png";
+import logo from "../../public/assets/cotrackerswhite.png";
 import Image from "next/image";
 import WindowIcon from "@mui/icons-material/Window";
-import { format, compareAsc } from "date-fns";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { format } from "date-fns";
+import { getAuth } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { doc, setDoc, getDoc, collection, updateDoc, increment } from "firebase/firestore";
 import { db } from "../../firebase_api/firebaseConfig";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -35,7 +34,6 @@ import {
   useCombobox,
   PillsInput,
   Pill,
-	TextInput,
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import "@mantine/core/styles.css";
