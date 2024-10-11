@@ -12,7 +12,7 @@ async function create_new_user(uid){
         user: uid,
         transaction: 0,
         total_spent: 0.00,
-
+        tags: ["Income","Food"],
       });
 }
 
